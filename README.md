@@ -4,4 +4,10 @@ My survival game in Java. Survive the wild.
 
 ## Screenshots
 
-> coming soon
+- Terrain
+
+![terrain](.github/screenshots/moving.gif)
+
+- Drawing
+
+![drawing](.github/screenshots/drawing.gif)
