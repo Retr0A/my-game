@@ -49,7 +49,7 @@ public class AsteroidRenderer {
         asteroidShader.cleanUp();
     }
 
-    public void render(List<AsteroidEntity> asteroidEntities, LightEntity light, CameraEntity camera){
+    public void render(List<TerrainEntity> asteroidEntities, LightEntity light, PlayerEntity camera){
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -75,8 +75,8 @@ public class AsteroidRenderer {
         asteroidShader.stop();
     }
 
-    private void renderEntities(List<AsteroidEntity> asteroidEntities, AsteroidShader shader){
-       for(AsteroidEntity asteroidEntity : asteroidEntities){
+    private void renderEntities(List<TerrainEntity> asteroidEntities, AsteroidShader shader){
+       for(TerrainEntity asteroidEntity : asteroidEntities){
             prepareRawModel(asteroidEntity.getRawModel());
             prepareEntity(asteroidEntity, shader);
             GL11.glDrawElements(GL11.GL_TRIANGLES, asteroidEntity.getRawModel().getVertexCount(), GL11.GL_UNSIGNED_INT, 0);
@@ -84,7 +84,7 @@ public class AsteroidRenderer {
         }
     }
 
-    private void prepareEntity(AsteroidEntity asteroidEntity, AsteroidShader shader) {
+    private void prepareEntity(TerrainEntity asteroidEntity, AsteroidShader shader) {
         Matrix4f transformationMatrix = MatrixHelper.createTransformationMatrix(asteroidEntity.getDrawPosition(), asteroidEntity.getRotation(), asteroidEntity.getScale());
         shader.loadTransformationMatrix(transformationMatrix);
     }

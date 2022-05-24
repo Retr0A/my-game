@@ -3,7 +3,7 @@ package org.retroa.game.helper;
 import org.lwjgl.util.vector.Matrix4f;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-import org.retroa.game.entities.CameraEntity;
+import org.retroa.game.entities.PlayerEntity;
 
 /**
  * Created by NinthWorld on 6/6/2016.
@@ -29,7 +29,7 @@ public class MatrixHelper {
         return matrix;
     }
 
-    public static Matrix4f createViewMatrix(CameraEntity camera) {
+    public static Matrix4f createViewMatrix(PlayerEntity camera) {
         Matrix4f viewMatrix = new Matrix4f();
         viewMatrix.setIdentity();
         Matrix4f.rotate(camera.getRotation().getX(), new Vector3f(1, 0, 0), viewMatrix, viewMatrix);

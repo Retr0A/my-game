@@ -1,7 +1,7 @@
 package org.retroa.game.shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
-import org.retroa.game.entities.CameraEntity;
+import org.retroa.game.entities.PlayerEntity;
 import org.retroa.game.helper.MatrixHelper;
 
 /**
@@ -38,7 +38,7 @@ public class NormalShader extends AbstractShader {
         super.loadMatrix(location_transformationMatrix, matrix);
     }
 
-    public void loadViewMatrix(CameraEntity camera){
+    public void loadViewMatrix(PlayerEntity camera){
         Matrix4f viewMatrix = MatrixHelper.createViewMatrix(camera);
         super.loadMatrix(location_viewMatrix, viewMatrix);
     }

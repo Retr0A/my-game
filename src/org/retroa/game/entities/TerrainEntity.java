@@ -9,13 +9,13 @@ import org.retroa.game.models.Loader;
 /**
  * Created by NinthWorld on 9/24/2016.
  */
-public class AsteroidEntity extends VoxelEntity {
+public class TerrainEntity extends VoxelEntity {
 
     @SuppressWarnings("unused")
 	private Vector3f centerPosition;
     private int width, height, depth;
 
-    public AsteroidEntity(Loader loader, Vector3f centerPosition, int cubicLengths, float radius, float noiseAmp, int largestFeature, double persistence, int seed){
+    public TerrainEntity(Loader loader, Vector3f centerPosition, int cubicLengths, float radius, float noiseAmp, int largestFeature, double persistence, int seed){
         super(new VoxelData(cubicLengths, cubicLengths, cubicLengths));
         this.centerPosition = centerPosition;
         this.width = 64;
@@ -56,7 +56,17 @@ public class AsteroidEntity extends VoxelEntity {
     }
 
     public BoundingBox getBoundingBox(){
-        return new BoundingBox(getPosition(), new Vector3f(this.getVoxelData().getVoxelData().length, this.getVoxelData().getVoxelData()[0].length, this.getVoxelData().getVoxelData()[0][0].length));
+        return new BoundingBox(getPosition(),
+        		new Vector3f(this.getVoxelData().getVoxelData().length,
+        				this.getVoxelData().getVoxelData()[0].length - 30,
+        				this.getVoxelData().getVoxelData()[0][0].length));
+    }
+    
+    public BoundingBox getComplexBoundingBox(){
+        return new BoundingBox(getPosition(),
+        		new Vector3f(this.getDrawPosition().x,
+        				this.getDrawPosition().y,
+        				this.getDrawPosition().z));
     }
 
     public void setCenterPosition(Vector3f centerPosition) {

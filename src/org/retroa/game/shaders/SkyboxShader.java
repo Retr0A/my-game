@@ -1,7 +1,7 @@
 package org.retroa.game.shaders;
 
 import org.lwjgl.util.vector.Matrix4f;
-import org.retroa.game.entities.CameraEntity;
+import org.retroa.game.entities.PlayerEntity;
 import org.retroa.game.helper.MatrixHelper;
 
 /**
@@ -23,7 +23,7 @@ public class SkyboxShader extends AbstractShader {
         super.loadMatrix(location_projectionMatrix, matrix);
     }
 
-    public void loadViewMatrix(CameraEntity camera){
+    public void loadViewMatrix(PlayerEntity camera){
         Matrix4f matrix = MatrixHelper.createViewMatrix(camera);
         matrix.m30 = matrix.m31 = matrix.m32 = 0;
         super.loadMatrix(location_viewMatrix, matrix);

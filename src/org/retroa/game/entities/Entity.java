@@ -1,6 +1,7 @@
 package org.retroa.game.entities;
 
 import org.lwjgl.util.vector.Vector3f;
+import org.retroa.game.engine.Main;
 
 /**
  * Created by NinthWorld on 9/22/2016.
@@ -44,6 +45,24 @@ public class Entity {
         position.x += x;
         position.y += y;
         position.z += z;
+    }
+    
+    public boolean move(float x, float y, float z){
+    	int tick_time = Main.getTickTime();
+		double tick_mult = tick_time / 1000f;
+
+		double new_x = position.x + x * tick_mult;
+		double new_y = position.y + y * tick_mult;
+		double new_z = position.z + z * tick_mult;
+		
+		if (Main.Entities.get(0).getBoundingBox().isPointInBB(new Vector3f((float)new_x, (float)new_y, (float)new_z))) {
+			position.x = (float) new_x;
+			position.y = (float) new_y;
+			position.z = (float) new_z;
+			return true;
+		}
+        
+        return false;
     }
 
     public void increaseRotation(Vector3f delta) {

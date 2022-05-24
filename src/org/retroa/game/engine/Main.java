@@ -34,7 +34,7 @@ public class Main {
     private DebugRenderer debugRenderer;
 
     private LightEntity light;
-    private CameraEntity camera;
+    public static PlayerEntity camera;
 
     private Fbo multisampleFbo;
     private Fbo skyboxFbo;
@@ -44,15 +44,22 @@ public class Main {
     private Fbo NormalFbo;
     private Fbo spaceShipFbo;
 
-    @SuppressWarnings("unused")
-	private Map<RawModel, List<ModelEntity>> modelEntities;
-    private List<CuboidEntity> cuboidEntities;
-    private List<PlaneEntity> planeEntities;
-    private List<AsteroidEntity> Entities;
-    private List<DebugEntity> debugEntities;
+    public static Map<RawModel, List<ModelEntity>> modelEntities;
+    public static List<CuboidEntity> cuboidEntities;
+    public static List<PlaneEntity> planeEntities;
+    public static List<TerrainEntity> Entities;
+    public static List<DebugEntity> debugEntities;
 
-    private Queue<AsteroidEntity> UpdateQueue;
+    private Queue<TerrainEntity> UpdateQueue;
 
+    private static int tick_time;
+    private long tick_timestamp;
+    public static float gravity = 9.8f;
+    
+    public static int getTickTime() {
+    	return tick_time;
+    }
+    
     public Main(){
         loader = new Loader();
 
@@ -62,7 +69,7 @@ public class Main {
         light = new LightEntity(new Vector3f(1, 1, 1), new Vector3f(1f, 0.8f, 0.4f));
         light.setAmbient(new Vector3f(0.1f, 0.1f, 0.2f));
 
-        camera = new CameraEntity(new Vector3f(25, 25, 25));
+        camera = new PlayerEntity(new Vector3f(25, 25, 25));
         camera.setRotation(new Vector3f((float) Math.PI/6f, (float) -Math.PI/6f, 0f));
 
         modelEntities = new HashMap<>();
@@ -120,7 +127,7 @@ public class Main {
     private void setup(){
     	Random random = new Random();
 
-        AsteroidEntity Entity = new AsteroidEntity(loader, new Vector3f(0, 0, 0), 64, 36, 32, 128, 0.5, random.nextInt());
+        TerrainEntity Entity = new TerrainEntity(loader, new Vector3f(0, 0, 0), 64, 36, 32, 128, 0.5, random.nextInt());
         Entities.add(Entity);
 
         //float cubicLength = Entity.getVoxelData().getVoxelData().length*Entity.getScale();
@@ -141,6 +148,15 @@ public class Main {
     boolean rightMouse = false;
     boolean leftMouse = false;
     private void loop(){
+    	
+    	Date d = new Date();
+		long this_timestamp = d.getTime();
+		
+		tick_time = (int) (this_timestamp - tick_timestamp);
+		if (tick_time > 40) tick_time = 40;
+		if (tick_time < 0) tick_time = 0;
+		tick_timestamp = this_timestamp;
+		
         time = queueUpdateTime = System.nanoTime();
         while(!Display.isCloseRequested()){
             if(System.nanoTime() - time < 1000000000L){
@@ -153,7 +169,7 @@ public class Main {
 
             if(System.nanoTime() - queueUpdateTime >= 1000000000L / 2L){
                 queueUpdateTime = System.nanoTime();
-                for(AsteroidEntity Entity : UpdateQueue){
+                for(TerrainEntity Entity : UpdateQueue){
                     loader.cleanRawModel(Entity.getRawModel());
                     Entity.generateRawModel(loader);
                 }
@@ -161,11 +177,6 @@ public class Main {
             }
 
             camera.move();
-
-            //debugEntities.get(0).setPosition(Vector3f.add(camera.getPosition(), new Vector3f(0, -5, 0), null));
-
-
-            light.setPosition(new Vector3f((float) Math.cos(angle)*10f, 5f, (float) Math.sin(angle)*10f));
 
             if(Keyboard.isKeyDown(Keyboard.KEY_LEFT)){
                 angle += Math.PI/200f;
@@ -187,7 +198,7 @@ public class Main {
             }
 
             drawCuboid = false;
-            for(AsteroidEntity Entity : Entities){
+            for(TerrainEntity Entity : Entities){
                 for(int i=0; i<100; i++){
                     Vector3f point = Vector3f.add(camera.getPosition(), VectorHelper.scalar((float) i, camera.getDirectionVector()), null);
                     if(Entity.getBoundingBox().isPointInBB(point)){

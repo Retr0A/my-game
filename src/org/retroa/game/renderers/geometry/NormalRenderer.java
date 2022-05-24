@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
 import org.lwjgl.opengl.GL30;
 import org.lwjgl.util.vector.Matrix4f;
-import org.retroa.game.entities.CameraEntity;
+import org.retroa.game.entities.PlayerEntity;
 import org.retroa.game.entities.ModelEntity;
 import org.retroa.game.helper.MatrixHelper;
 import org.retroa.game.models.Loader;
@@ -31,7 +31,7 @@ public class NormalRenderer {
         normalShader.cleanUp();
     }
 
-    public void render(List<ModelEntity> modelEntities, CameraEntity camera){
+    public void render(List<ModelEntity> modelEntities, PlayerEntity camera){
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_DEPTH_TEST);

@@ -19,7 +19,7 @@ public class DisplayManager {
 	private static final int HEIGHT = (int) (gd.getDisplayMode().getHeight() * 0.8); // 720;
 	private static final int FPS_CAP = 60;
 	private static final boolean VSYNC = true;
-	private static final String TITLE = "Marching Cubes";
+	private static final String TITLE = "Game";
 
 	public static void createDisplay() {
 		try {
@@ -32,6 +32,7 @@ public class DisplayManager {
 					new ContextAttribs(3, 3).withForwardCompatible(true).withProfileCore(true));
 			GL11.glEnable(GL13.GL_MULTISAMPLE);
 			Display.setTitle(TITLE);
+			Display.setResizable(true);
 		} catch (LWJGLException e) {
 			e.printStackTrace();
 			System.exit(0);
@@ -41,8 +42,30 @@ public class DisplayManager {
 	}
 
 	public static void updateDisplay() {
+		//boolean isFullscreen = false;
+		
 		Display.sync(FPS_CAP);
 		Display.update();
+		
+		/*if (Keyboard.isKeyDown(Keyboard.KEY_F11)) {
+			
+			if (!isFullscreen) {
+				try {
+					Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode());
+				} catch (LWJGLException e) {
+					e.printStackTrace();
+				}
+				
+				isFullscreen = true;
+			} else if (isFullscreen) {
+				try {
+					Display.setDisplayModeAndFullscreen(new DisplayMode(WIDTH, HEIGHT));
+				} catch (LWJGLException e) {
+					e.printStackTrace();
+				}
+				isFullscreen = false;
+			}
+		}*/
 	}
 
 	public static void closeDisplay() {

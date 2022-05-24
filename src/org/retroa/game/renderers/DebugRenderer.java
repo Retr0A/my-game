@@ -49,7 +49,7 @@ public class DebugRenderer {
         spaceShipShader.cleanUp();
     }
 
-    public void render(List<DebugEntity> spaceShipEntities, LightEntity light, CameraEntity camera){
+    public void render(List<DebugEntity> spaceShipEntities, LightEntity light, PlayerEntity camera){
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
